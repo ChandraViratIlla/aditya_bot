@@ -96,7 +96,7 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
          style={{ 
-           backgroundImage: 'url("/public/IMG_3395.PNG")',
+           backgroundImage: 'url("/IMG_3395.PNG")',
            backgroundColor: '',
            backgroundBlendMode: 'overlay'
          }}>
@@ -180,3 +180,4 @@ export default function Index() {
     </div>
   );
 }
+
