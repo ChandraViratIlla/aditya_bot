@@ -1,0 +1,97 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 240 20% 97%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+ 
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+ 
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+ 
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 221 83% 53%;
+
+    --chat-user: 221 83% 53%;
+    --chat-bot: 240 20% 97%;
+ 
+    --radius: 0.75rem;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image: radial-gradient(
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+  }
+
+  .chat-text {
+    white-space: pre-line;
+    line-height: 1.7;
+  }
+}
+
+.chat-container {
+  @apply flex flex-col space-y-4 p-4 max-w-3xl mx-auto h-[calc(100vh-16rem)] overflow-y-auto;
+  scroll-behavior: smooth;
+}
+
+.chat-container::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  @apply bg-muted rounded-full;
+}
+
+.message {
+  @apply px-6 py-4 rounded-2xl max-w-[85%] animate-message-fade-in opacity-0 shadow-sm;
+}
+
+.user-message {
+  @apply bg-chat-user text-white self-end;
+}
+
+.bot-message {
+  @apply bg-white text-foreground self-start border;
+}
+
+.menu-button {
+  @apply px-4 py-3 bg-white border shadow-sm text-foreground rounded-lg hover:bg-secondary/50 transition-colors text-sm font-medium;
+}
+
+.language-button {
+  @apply px-6 py-4 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200;
+}
