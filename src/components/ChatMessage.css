@@ -1,0 +1,51 @@
+/* src/components/ChatMessage.css */
+.bot-message {
+    background-color: #e6f0ff;
+    color: #1e40af;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+    max-width: 100%;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .user-message {
+    background-color: #f3f4f6;
+    color: #1f2937;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+    max-width: 100%;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .bot-message.typing,
+  .user-message.typing {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  
+  .bot-message:not(.typing),
+  .user-message:not(.typing) {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .message-line {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+  
+  .typing-indicator {
+    color: #1e40af;
+    font-weight: bold;
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+  }
