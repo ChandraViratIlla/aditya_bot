@@ -16,13 +16,52 @@ export default function Index() {
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      const { scrollHeight, clientHeight, scrollTop } = chatContainerRef.current;
+      // Scroll to the bottom if content exceeds the visible height or is close to the bottom
+      if (scrollHeight > clientHeight) {
+        chatContainerRef.current.scrollTop = scrollHeight; // Direct assignment for full scroll
+      }
     }
   };
 
+  // Scroll to bottom when messages or chatHistory changes
   useEffect(() => {
     scrollToBottom();
-  }, [chatHistory]);
+  }, [messages, chatHistory]);
+
+  // Monitor container and content changes to scroll if content exceeds size
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    if (!chatContainer) return;
+
+    const checkAndScroll = () => {
+      const { scrollHeight, clientHeight } = chatContainer;
+      if (scrollHeight > clientHeight) {
+        chatContainer.scrollTop = scrollHeight; // Force scroll to bottom
+      }
+    };
+
+    // Use MutationObserver to detect changes in content (e.g., existing message growing)
+    const mutationObserver = new MutationObserver(checkAndScroll);
+    mutationObserver.observe(chatContainer, {
+      childList: true, // Detect new messages
+      subtree: true,   // Detect changes in existing messages
+      characterData: true, // Detect text changes
+    });
+
+    // Use ResizeObserver to detect container size changes
+    const resizeObserver = new ResizeObserver(checkAndScroll);
+    resizeObserver.observe(chatContainer);
+
+    // Initial check
+    checkAndScroll();
+
+    // Cleanup observers on unmount
+    return () => {
+      mutationObserver.disconnect();
+      resizeObserver.unobserve(chatContainer);
+    };
+  }, [isOpen]); // Re-run when chat opens/closes
 
   const addMessage = (content: string, isBot = true) => {
     setMessages((prev) => [...prev, { content, isBot }]);
@@ -118,7 +157,6 @@ export default function Index() {
       style={{
         backgroundImage: 'url("/IMG_3395.PNG")',
         backgroundColor: "rgba(255, 255, 255, 0.8)",
-       
       }}
     >
       <button
@@ -181,7 +219,7 @@ export default function Index() {
 
               {/* Chat History Panel */}
               <div className="w-full sm:w-2/3 flex flex-col bg-white">
-                <h2 className="font-semibold text-lg px-4 py-3 bg-gray-100 border-b">Chat History</h2>
+                <h2 className="font-semibold text-lg px-4 py-3 bg-gray-100 border-b">Your Conversation</h2>
                 <div className="flex-1 overflow-y-auto p-4" ref={chatContainerRef}>
                   {chatHistory.length === 0 ? (
                     <div className="flex items-center justify-center h-full text-gray-500">

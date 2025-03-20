@@ -25,7 +25,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ content, isBot, classN
   useEffect(() => {
     if (!isBot || !isTyping) return;
 
-    const typingSpeed = 30;
+    const typingSpeed = 10;
     let currentIndex = 0;
     const fullContent = content;
 
